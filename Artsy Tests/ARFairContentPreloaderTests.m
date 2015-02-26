@@ -269,11 +269,10 @@ describe(@"with a published Bonjour service", ^{
                         completionBlock(nil, nil, errorWithResumeData);
                     }] downloadTaskWithURL:OCMOCK_ANY completionHandler:OCMOCK_ANY];
 
-                    // __block NSError *error = nil;
-                    // [preloader fetchPackage:^(NSError *e) { error = e; }];
-                    [preloader fetchPackage:^(NSError *e) { }];
+                    __block NSError *error = nil;
+                    [preloader fetchPackage:^(NSError *e) { error = e; }];
                     // No need to run the runloop, as our stubbing above immediately yields the block.
-                    // expect(error).to.equal(errorWithResumeData);
+                    expect(error).to.equal(errorWithResumeData);
                     expect([NSData dataWithContentsOfURL:preloader.partiallyDownloadedPackageURL]).to.equal(resumeData);
                 });
 
